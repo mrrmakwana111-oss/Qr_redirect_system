@@ -1,10 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=https://www.google.com">
-  <title>Redirecting...</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rate The Hammer Interior</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: #0d0d0d;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .card {
+      background: #171717;
+      border: 1px solid #2c2c2c;
+      border-radius: 18px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 410px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: #232323;
+      color: #facc15;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+    h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    p.sub { font-size: 13.5px; color: #a3a3a3; margin-bottom: 18px; line-height: 1.4; }
+    .reviews { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+    .review-box {
+      background: #202020;
+      border: 1px solid #303030;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #e5e5e5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .review-box:hover { border-color: #facc15; background: #262626; }
+    .btn {
+      margin-top: 10px;
+      width: 100%;
+      background: #facc15;
+      color: #111111;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toast {
+      margin-top: 14px;
+      font-size: 12.5px;
+      color: #4ade80;
+      min-height: 18px;
+    }
+    .direct-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 12.5px;
+      color: #9ca3af;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <p>Please wait, redirecting...</p>
+  <div class="card">
+    <div class="badge">★★★★★ Smart AI Review Helper</div>
+    <h1>The Hammer Interior</h1>
+    <p class="sub">Tap any review below to copy it automatically &amp; post on Google in 5 seconds:</p>
+
+    <div class="reviews">
+      <div class="review-box" onclick="copyAndGo(this)">
+        <span>"Amazing interior design work by The Hammer Interior! Very creative team, smooth execution, and delivered right within our budget. Highly recommended in Ahmedabad!"</span>
+        <button class="btn" type="button">Copy &amp; Post on Google →</button>
+      </div>
+
+      <div class="review-box" onclick="copyAndGo(this)">
+        <span>"Loved their modern design ideas and attention to detail. The young team understood our exact requirements and made the entire process hassle-free."</span>
+        <button class="btn" type="button">Copy &amp; Post on Google →</button>
+      </div>
+
+      <div class="review-box" onclick="copyAndGo(this)">
+        <span>"Best interior designer studio at CBD Mall, Chandkheda! Great quality materials, timely handover, and very professional support."</span>
+        <button class="btn" type="button">Copy &amp; Post on Google →</button>
+      </div>
+    </div>
+
+    <div id="status" class="toast"></div>
+    <a class="direct-link" href="https://maps.app.goo.gl/LCKZFgCGGzMvVaCb6?g_st=ac">Or write your own review directly →</a>
+  </div>
+
+  <script>
+    const GOOGLE_REVIEW_URL = "https://maps.app.goo.gl/LCKZFgCGGzMvVaCb6?g_st=ac";
+
+    function copyAndGo(el) {
+      const text = el.querySelector("span").innerText.replace(/^"|"$/g, "");
+      const status = document.getElementById("status");
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+
+      status.innerText = "✓ Review copied! Opening Google...";
+      setTimeout(() => {
+        window.location.href = GOOGLE_REVIEW_URL;
+      }, 450);
+    }
+  </script>
 </body>
 </html>
